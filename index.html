@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>饶老师的音乐小游戏 🎹</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Comic Sans MS", "幼圆", "微软雅黑", sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ff99cc' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-container::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff66cc'%3E%3Cpath d='M18 9v4H6V9H4v6h16V9h-2zm-2 2h-4v2h4v-2zM4 4h16v2H4V4zm0 14h12v2H4v-2z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+
+        .game-container::after {
+            content: "";
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236699ff'%3E%3Cpath d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+
+        .game-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #ff66cc;
+            text-shadow: 2px 2px 0 #ffff99;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #66ccff, #ff66cc);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 5px 15px rgba(102, 204, 255, 0.4);
+        }
+
+        .start-btn:active {
+            transform: scale(0.98);
+        }
+
+        .question-area {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 15px;
+            border: 3px dashed #66ccff;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .audio-btn {
+            background: linear-gradient(45deg, #ffff99, #ffcc66);
+            color: #333;
+            padding: 12px 30px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(255, 204, 102, 0.3);
+        }
+
+        .audio-icon {
+            font-size: 1.2rem;
+        }
+
+        .options-area {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .option-btn {
+            background: linear-gradient(45deg, #ff99cc, #ff66cc);
+            color: white;
+            padding: 20px 15px;
+            border-radius: 15px;
+            border-bottom: 5px solid #cc3399;
+            text-align: center;
+        }
+
+        .option-btn.correct {
+            background: linear-gradient(45deg, #99ff99, #66cc66);
+            border-bottom: 5px solid #339933;
+        }
+
+        .option-btn.wrong {
+            background: linear-gradient(45deg, #ff9999, #ff6666);
+            border-bottom: 5px solid #cc3333;
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff8e6;
+            padding: 15px 25px;
+            border-radius: 50px;
+            margin: 20px 0;
+            border: 2px solid #ffcc66;
+        }
+
+        .score-text, .question-count {
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .score-value {
+            color: #ff6600;
+            font-size: 1.5rem;
+        }
+
+        .instrument-info {
+            background-color: #f9f0ff;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #cc99ff;
+            margin: 20px 0;
+        }
+
+        .instrument-title {
+            font-size: 1.2rem;
+            color: #9933cc;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .instrument-desc {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .feedback-area {
+            text-align: center;
+            margin: 20px 0;
+            min-height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .feedback-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 10px 30px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        .feedback-correct {
+            background-color: #e6ffe6;
+            color: #339933;
+            border: 2px solid #66cc66;
+        }
+
+        .feedback-wrong {
+            background-color: #ffe6e6;
+            color: #cc3333;
+            border: 2px solid #ff6666;
+        }
+
+        .result-area {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(45deg, #66ccff, #ff99cc);
+            border-radius: 20px;
+            color: white;
+            margin: 20px 0;
+            box-shadow: 0 10px 20px rgba(102, 204, 255, 0.3);
+        }
+
+        .result-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .result-score {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .restart-btn {
+            background-color: white;
+            color: #ff66cc;
+            padding: 12px 40px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 20px 15px;
+            }
+
+            .game-title {
+                font-size: 2rem;
+            }
+
+            .options-area {
+                grid-template-columns: 1fr;
+            }
+
+            .score-board {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-title {
+                font-size: 1.8rem;
+            }
+
+            .option-btn {
+                padding: 15px 10px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="game-title">🎵 饶老师的音乐小游戏 🎹</h1>
+        
+        <button class="start-btn" id="startBtn">开始游戏 🎮</button>
+        
+        <div class="game-main hidden" id="gameMain">
+            <div class="score-board">
+                <div class="score-text">得分: <span class="score-value" id="score">0</span> 分</div>
+                <div class="question-count">第 <span id="currentQuestion">1</span>/10 题</div>
+            </div>
+            
+            <div class="question-area">
+                <p class="question-text">这段音乐是由哪种乐器演奏的？</p>
+                <button class="audio-btn" id="audioBtn">
+                    <span class="audio-icon">🔊</span> 播放音乐
+                </button>
+            </div>
+            
+            <div class="options-area" id="optionsArea"></div>
+            
+            <div class="instrument-info" id="instrumentInfo">
+                <h3 class="instrument-title" id="instrumentTitle">乐器小知识</h3>
+                <p class="instrument-desc" id="instrumentDesc">回答问题后将显示该乐器的特点介绍哦～</p>
+            </div>
+            
+            <div class="feedback-area" id="feedbackArea"></div>
+            
+            <div class="result-area hidden" id="resultArea">
+                <h2 class="result-title" id="resultTitle">太棒啦！🎉</h2>
+                <p class="result-score" id="resultScore">你得了 0 分，是音乐小达人～</p>
+                <button class="restart-btn" id="restartBtn">重新开始 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 游戏核心数据定义
+        // 乐器库（包含音频链接、介绍，使用在线音频确保可访问）
+       const instrumentLibrary = {
+	钢琴: {
+	    name: "钢琴",
+	    audioUrl: "https://for-teach52.github.io/raolaoshi-music-game1/piano.mp3",
+	    desc: "钢琴是西洋古典音乐中的一种键盘乐器，有“乐器之王”的美称。由88个琴键（52个白键，36个黑键）和金属弦音板组成，音域宽广，表现力丰富，既能独奏也能伴奏。"
+	},
+	小提琴: {
+	    name: "小提琴",
+	    audioUrl: "https://for-teach52.github.io/raolaoshi-music-game1/violin.mp3",
+	    desc: "小提琴是一种弦乐器，有“乐器皇后”之称。由琴头、琴颈、琴身三部分组成，靠琴弓摩擦琴弦发声，音色优美，表现力强，是管弦乐队中的核心乐器。"
+	},
+	架子鼓: {
+	    name: "架子鼓",
+	    audioUrl: "https://for-teach52.github.io/raolaoshi-music-game1/drums.mp3",
+	    desc: "架子鼓是爵士乐队中重要的打击乐器，由多个鼓和镲片组成。没有固定的音高，主要用于控制节奏和律动，是现代音乐中不可或缺的节奏乐器。"
+	},
+	长笛: {
+	    name: "长笛",
+	    audioUrl: "https://for-teach52.github.io/raolaoshi-music-game1/flute.mp3",
+	    desc: "长笛是现代管弦乐和室乐中主要的高音旋律乐器，属于木管乐器。音色清新、透彻，音域宽广，既能演奏抒情旋律，也能演奏快速的音阶和装饰音。"
+	},
+	吉他: {
+	    name: "吉他",
+	    audioUrl: "https://for-teach52.github.io/raolaoshi-music-game1/guitar.mp3",
+	    desc: "吉他又译六弦琴，属于弹拨乐器。通常有六条弦，形状与提琴相似，音色圆润温暖，适合民谣、摇滚、古典等多种音乐风格，是非常流行的民间乐器。"
+	},
+	古筝: {
+	    name: "古筝",
+	    audioUrl: "https://for-teach52.github.io/raolaoshi-music-game1/guzheng.mp3",
+	    desc: "古筝是中国传统弹拨弦鸣乐器，又名汉筝、秦筝。一般由二十一弦组成，音色清脆悦耳，悠扬动听，是中国民族乐器中极具代表性的乐器之一。"
+	},
+	唢呐: {
+	    name: "唢呐",
+	    audioUrl: "https://for-teach52.github.io/raolaoshi-music-game1/suona.mp3",
+	    desc: "唢呐是中国民族吹管乐器的一种，音色高亢、嘹亮，穿透力极强，常用于民间婚丧嫁娶、节庆典礼等场合，是极具特色的民间乐器。"
+	},
+  	口风琴: {
+	    name: "口风琴",
+	    audioUrl: "https://for-teach52.github.io/raolaoshi-music-game1/harmonica.mp3",
+	    desc: "口风琴是一种结合了键盘和吹奏的乐器，体积小巧、音色明亮，操作简单，非常适合儿童音乐启蒙，既能独奏也能合奏。"
+	},
+  	萨克斯: {
+	    name: "萨克斯",
+	    audioUrl: "https://for-teach52.github.io/raolaoshi-music-game1/saxphone.mp3",
+	    desc: "萨克斯是一种木管乐器，兼具铜管乐器的嘹亮和木管乐器的柔和，音色丰富多变，广泛应用于爵士、流行、古典等音乐风格。"
+	},
+  	葫芦丝: {
+	    name: "葫芦丝",
+	    audioUrl: "https://for-teach52.github.io/raolaoshi-music-game1/hulusi.mp3",
+	    desc: "葫芦丝又称“葫芦箫”，是中国云南少数民族特色乐器，音色轻柔细腻、圆润质朴，擅长演奏抒情的民间曲调。"
+	    }
+	};
+
+        // 游戏状态变量
+        let currentScore = 0; // 当前得分
+        let currentQuestionNum = 1; // 当前题目数
+        let totalQuestions = 10; // 总题目数
+        let currentInstrument = null; // 当前答题的乐器
+        let isAnswered = false; // 是否已经答题
+        let audioPlayer = new Audio(); // 音频播放器
+
+        // 2. DOM元素获取
+        const startBtn = document.getElementById('startBtn');
+        const gameMain = document.getElementById('gameMain');
+        const scoreElement = document.getElementById('score');
+        const currentQuestionElement = document.getElementById('currentQuestion');
+        const audioBtn = document.getElementById('audioBtn');
+        const optionsArea = document.getElementById('optionsArea');
+        const instrumentTitle = document.getElementById('instrumentTitle');
+        const instrumentDesc = document.getElementById('instrumentDesc');
+        const feedbackArea = document.getElementById('feedbackArea');
+        const resultArea = document.getElementById('resultArea');
+        const resultTitle = document.getElementById('resultTitle');
+        const resultScore = document.getElementById('resultScore');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // 3. 工具函数
+        // 随机获取一个乐器
+        function getRandomInstrument() {
+            const instrumentNames = Object.keys(instrumentLibrary);
+            const randomIndex = Math.floor(Math.random() * instrumentNames.length);
+            return instrumentLibrary[instrumentNames[randomIndex]];
+        }
+
+        // 生成选项（1个正确+3个错误）
+        function generateOptions(correctInstrument) {
+            const allInstruments = Object.values(instrumentLibrary);
+            // 过滤掉正确答案，随机选3个错误选项
+            const wrongOptions = allInstruments
+                .filter(instr => instr.name !== correctInstrument.name)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 3);
+            // 合并正确和错误选项，再打乱顺序
+            const allOptions = [correctInstrument, ...wrongOptions].sort(() => 0.5 - Math.random());
+            return allOptions;
+        }
+
+        // 渲染题目
+        function renderQuestion() {
+            // 重置状态
+            isAnswered = false;
+            feedbackArea.innerHTML = '';
+            instrumentTitle.textContent = '乐器小知识';
+            instrumentDesc.textContent = '回答问题后将显示该乐器的特点介绍哦～';
+            
+            // 获取随机乐器
+            currentInstrument = getRandomInstrument();
+            // 生成选项
+            const options = generateOptions(currentInstrument);
+            
+            // 渲染选项按钮
+            optionsArea.innerHTML = '';
+            options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option.name;
+                btn.dataset.instrument = option.name;
+                btn.addEventListener('click', handleOptionClick);
+                optionsArea.appendChild(btn);
+            });
+
+            // 更新题目数显示
+            currentQuestionElement.textContent = currentQuestionNum;
+        }
+
+        // 播放音频
+        function playAudio() {
+	if (currentInstrument) {
+        	    audioPlayer.src = currentInstrument.audioUrl;
+        	    audioPlayer.crossOrigin = "anonymous"; // 新增：允许跨域播放，更稳定
+        	    audioPlayer.play().catch(err => {
+            		alert('音频播放失败，请检查：1.网络是否正常 2.GitHub里的音频文件名和代码里的是否一致 3.浏览器是否允许播放音频');
+            		console.error('音频播放错误:', err);
+                });
+            }
+        }
+
+        // 处理选项点击
+        function handleOptionClick(e) {
+            if (isAnswered) return; // 已答题则不再响应
+            isAnswered = true;
+
+            const selectedBtn = e.target;
+            const selectedName = selectedBtn.dataset.instrument;
+            const isCorrect = selectedName === currentInstrument.name;
+
+            // 禁用所有选项按钮
+            const allOptionBtns = document.querySelectorAll('.option-btn');
+            allOptionBtns.forEach(btn => {
+                btn.disabled = true;
+                // 标记正确/错误
+                if (btn.dataset.instrument === currentInstrument.name) {
+                    btn.classList.add('correct');
+                } else if (btn === selectedBtn && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+            });
+
+            // 显示反馈
+            const feedbackText = document.createElement('div');
+            feedbackText.className = `feedback-text ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
+            feedbackText.textContent = isCorrect ? '✅ 回答正确！' : `❌ 回答错误，正确答案是：${currentInstrument.name}`;
+            feedbackArea.appendChild(feedbackText);
+
+            // 显示乐器介绍
+            instrumentTitle.textContent = `${currentInstrument.name} 🎵`;
+            instrumentDesc.textContent = currentInstrument.desc;
+
+            // 更新得分
+            if (isCorrect) {
+                currentScore += 10;
+                scoreElement.textContent = currentScore;
+            }
+
+            // 延迟进入下一题/显示结果
+            setTimeout(() => {
+                if (currentQuestionNum < totalQuestions) {
+                    // 下一题
+                    currentQuestionNum++;
+                    renderQuestion();
+                } else {
+                    // 游戏结束，显示结果
+                    showResult();
+                }
+            }, 2000);
+        }
+
+        // 显示游戏结果
+        function showResult() {
+            resultArea.classList.remove('hidden');
+            // 根据得分显示不同评语
+            if (currentScore === 100) {
+                resultTitle.textContent = '满分！🎖️ 音乐小天才！';
+                resultScore.textContent = `你得了 ${currentScore} 分，太厉害啦！`;
+            } else if (currentScore >= 70) {
+                resultTitle.textContent = '超棒！🎉';
+                resultScore.textContent = `你得了 ${currentScore} 分，是音乐小达人～`;
+            } else if (currentScore >= 40) {
+                resultTitle.textContent = '不错哦！💪';
+                resultScore.textContent = `你得了 ${currentScore} 分，继续加油！`;
+            } else {
+                resultTitle.textContent = '继续努力！🌟';
+                resultScore.textContent = `你得了 ${currentScore} 分，多听听乐器声音就会更棒啦～`;
+            }
+        }
+
+        // 重置游戏
+        function resetGame() {
+            currentScore = 0;
+            currentQuestionNum = 1;
+            scoreElement.textContent = 0;
+            resultArea.classList.add('hidden');
+            renderQuestion();
+        }
+
+        // 4. 事件监听
+        // 开始游戏
+        startBtn.addEventListener('click', () => {
+            startBtn.classList.add('hidden');
+            gameMain.classList.remove('hidden');
+            resetGame();
+        });
+
+        // 播放音频
+        audioBtn.addEventListener('click', playAudio);
+
+        // 重新开始游戏
+        restartBtn.addEventListener('click', resetGame);
+
+        // 5. 页面加载完成初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化音频播放器
+            audioPlayer.volume = 0.7;
+            // 新增：预加载所有乐器音频（提升播放稳定性）
+            Object.values(instrumentLibrary).forEach(instr => {
+                const preloadAudio = new Audio(instr.audioUrl);
+                preloadAudio.load(); // 提前加载音频资源
+            });
+        });
+    </script>
+</body>
+</html>
