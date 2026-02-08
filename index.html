@@ -222,7 +222,7 @@
         }
 
         .feedback-wrong {
-            background-color: #ffe6e6;
+            background-color: #e6ffe6;
             color: #cc3333;
             border: 2px solid #ff6666;
         }
@@ -334,7 +334,6 @@
 
     <script>
         // 1. 游戏核心数据定义
-        // 乐器库（包含音频链接、介绍，使用在线音频确保可访问）
        const instrumentLibrary = {
 	钢琴: {
 	    name: "钢琴",
@@ -389,12 +388,15 @@
 	};
 
         // 游戏状态变量
-        let currentScore = 0; // 当前得分
-        let currentQuestionNum = 1; // 当前题目数
-        let totalQuestions = 10; // 总题目数
-        let currentInstrument = null; // 当前答题的乐器
-        let isAnswered = false; // 是否已经答题
-        let audioPlayer = new Audio(); // 音频播放器
+        let currentScore = 0;
+        let currentQuestionNum = 1;
+        let totalQuestions = 10;
+        let currentInstrument = null;
+        let isAnswered = false;
+        let audioPlayer = new Audio();
+        let usedInstruments = [];
+        // 新增：缓存预加载的音频对象（避免重复创建）
+        let audioCache = {};
 
         // 2. DOM元素获取
         const startBtn = document.getElementById('startBtn');
@@ -412,40 +414,37 @@
         const restartBtn = document.getElementById('restartBtn');
 
         // 3. 工具函数
-        // 随机获取一个乐器
+        // 随机获取一个乐器（确保不重复）
         function getRandomInstrument() {
-            const instrumentNames = Object.keys(instrumentLibrary);
-            const randomIndex = Math.floor(Math.random() * instrumentNames.length);
-            return instrumentLibrary[instrumentNames[randomIndex]];
+    	const instrumentNames = Object.keys(instrumentLibrary);
+    	const availableInstruments = instrumentNames.filter(name => !usedInstruments.includes(name));
+    	const randomIndex = Math.floor(Math.random() * availableInstruments.length);
+    	const selectedName = availableInstruments[randomIndex];
+    	usedInstruments.push(selectedName);
+    	return instrumentLibrary[selectedName];
         }
 
-        // 生成选项（1个正确+3个错误）
+        // 生成选项
         function generateOptions(correctInstrument) {
             const allInstruments = Object.values(instrumentLibrary);
-            // 过滤掉正确答案，随机选3个错误选项
             const wrongOptions = allInstruments
                 .filter(instr => instr.name !== correctInstrument.name)
                 .sort(() => 0.5 - Math.random())
                 .slice(0, 3);
-            // 合并正确和错误选项，再打乱顺序
             const allOptions = [correctInstrument, ...wrongOptions].sort(() => 0.5 - Math.random());
             return allOptions;
         }
 
         // 渲染题目
         function renderQuestion() {
-            // 重置状态
             isAnswered = false;
             feedbackArea.innerHTML = '';
             instrumentTitle.textContent = '乐器小知识';
             instrumentDesc.textContent = '回答问题后将显示该乐器的特点介绍哦～';
             
-            // 获取随机乐器
             currentInstrument = getRandomInstrument();
-            // 生成选项
             const options = generateOptions(currentInstrument);
             
-            // 渲染选项按钮
             optionsArea.innerHTML = '';
             options.forEach(option => {
                 const btn = document.createElement('button');
@@ -456,36 +455,47 @@
                 optionsArea.appendChild(btn);
             });
 
-            // 更新题目数显示
             currentQuestionElement.textContent = currentQuestionNum;
         }
 
-        // 播放音频
+        // 修复后的播放音频函数（核心修改）
         function playAudio() {
-	if (currentInstrument) {
-        	    audioPlayer.src = currentInstrument.audioUrl;
-        	    audioPlayer.crossOrigin = "anonymous"; // 新增：允许跨域播放，更稳定
-        	    audioPlayer.play().catch(err => {
-            		alert('音频播放失败，请检查：1.网络是否正常 2.GitHub里的音频文件名和代码里的是否一致 3.浏览器是否允许播放音频');
-            		console.error('音频播放错误:', err);
-                });
+            if (!currentInstrument) return;
+            
+            // 1. 暂停上一段正在播放的音频
+            audioPlayer.pause();
+            // 2. 优先使用缓存的音频对象，避免重复加载
+            const audioUrl = currentInstrument.audioUrl;
+            if (audioCache[audioUrl]) {
+                audioPlayer = audioCache[audioUrl];
+            } else {
+                audioPlayer = new Audio(audioUrl);
+                audioPlayer.crossOrigin = "anonymous";
+                audioCache[audioUrl] = audioPlayer; // 存入缓存
             }
+            
+            // 3. 重新加载并播放（解决缓存/跨域导致的播放失败）
+            audioPlayer.currentTime = 0; // 重置播放位置
+            audioPlayer.load(); // 重新加载音频
+            audioPlayer.play().catch(err => {
+                // 优化错误提示：显示具体乐器名称，方便排查
+                alert(`【${currentInstrument.name}】音频播放失败，请检查：1.网络是否正常 2.该乐器音频文件是否存在`);
+                console.error(`音频播放错误（${currentInstrument.name}）:`, err);
+            });
         }
 
         // 处理选项点击
         function handleOptionClick(e) {
-            if (isAnswered) return; // 已答题则不再响应
+            if (isAnswered) return;
             isAnswered = true;
 
             const selectedBtn = e.target;
             const selectedName = selectedBtn.dataset.instrument;
             const isCorrect = selectedName === currentInstrument.name;
 
-            // 禁用所有选项按钮
             const allOptionBtns = document.querySelectorAll('.option-btn');
             allOptionBtns.forEach(btn => {
                 btn.disabled = true;
-                // 标记正确/错误
                 if (btn.dataset.instrument === currentInstrument.name) {
                     btn.classList.add('correct');
                 } else if (btn === selectedBtn && !isCorrect) {
@@ -493,30 +503,24 @@
                 }
             });
 
-            // 显示反馈
             const feedbackText = document.createElement('div');
             feedbackText.className = `feedback-text ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
             feedbackText.textContent = isCorrect ? '✅ 回答正确！' : `❌ 回答错误，正确答案是：${currentInstrument.name}`;
             feedbackArea.appendChild(feedbackText);
 
-            // 显示乐器介绍
             instrumentTitle.textContent = `${currentInstrument.name} 🎵`;
             instrumentDesc.textContent = currentInstrument.desc;
 
-            // 更新得分
             if (isCorrect) {
                 currentScore += 10;
                 scoreElement.textContent = currentScore;
             }
 
-            // 延迟进入下一题/显示结果
             setTimeout(() => {
                 if (currentQuestionNum < totalQuestions) {
-                    // 下一题
                     currentQuestionNum++;
                     renderQuestion();
                 } else {
-                    // 游戏结束，显示结果
                     showResult();
                 }
             }, 2000);
@@ -525,7 +529,6 @@
         // 显示游戏结果
         function showResult() {
             resultArea.classList.remove('hidden');
-            // 根据得分显示不同评语
             if (currentScore === 100) {
                 resultTitle.textContent = '满分！🎖️ 音乐小天才！';
                 resultScore.textContent = `你得了 ${currentScore} 分，太厉害啦！`;
@@ -545,33 +548,31 @@
         function resetGame() {
             currentScore = 0;
             currentQuestionNum = 1;
+            usedInstruments = [];
             scoreElement.textContent = 0;
             resultArea.classList.add('hidden');
             renderQuestion();
         }
 
         // 4. 事件监听
-        // 开始游戏
         startBtn.addEventListener('click', () => {
             startBtn.classList.add('hidden');
             gameMain.classList.remove('hidden');
             resetGame();
         });
 
-        // 播放音频
         audioBtn.addEventListener('click', playAudio);
-
-        // 重新开始游戏
         restartBtn.addEventListener('click', resetGame);
 
-        // 5. 页面加载完成初始化
+        // 5. 优化预加载逻辑（提前缓存所有音频）
         document.addEventListener('DOMContentLoaded', () => {
-            // 初始化音频播放器
             audioPlayer.volume = 0.7;
-            // 新增：预加载所有乐器音频（提升播放稳定性）
+            // 预加载所有音频并存入缓存
             Object.values(instrumentLibrary).forEach(instr => {
-                const preloadAudio = new Audio(instr.audioUrl);
-                preloadAudio.load(); // 提前加载音频资源
+                const audio = new Audio(instr.audioUrl);
+                audio.crossOrigin = "anonymous";
+                audio.load();
+                audioCache[instr.audioUrl] = audio;
             });
         });
     </script>
