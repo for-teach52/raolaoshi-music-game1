@@ -222,7 +222,7 @@
         }
 
         .feedback-wrong {
-            background-color: #ffe6e6;
+            background-color: #e6ffe6;
             color: #cc3333;
             border: 2px solid #ff6666;
         }
@@ -333,69 +333,70 @@
     </div>
 
     <script>
-        // 1. 游戏核心数据定义（替换为GitHub Raw链接）
-        const instrumentLibrary = {
-            钢琴: {
-                name: "钢琴",
-                audioUrl: "https://raw.githubusercontent.com/for-teach52/raolaoshi-music-game1/main/piano.mp3",
-                desc: "钢琴是西洋古典音乐中的一种键盘乐器，有“乐器之王”的美称。由88个琴键（52个白键，36个黑键）和金属弦音板组成，音域宽广，表现力丰富，既能独奏也能伴奏。"
-            },
-            小提琴: {
-                name: "小提琴",
-                audioUrl: "https://raw.githubusercontent.com/for-teach52/raolaoshi-music-game1/main/violin.mp3",
-                desc: "小提琴是一种弦乐器，有“乐器皇后”之称。由琴头、琴颈、琴身三部分组成，靠琴弓摩擦琴弦发声，音色优美，表现力强，是管弦乐队中的核心乐器。"
-            },
-            架子鼓: {
-                name: "架子鼓",
-                audioUrl: "https://raw.githubusercontent.com/for-teach52/raolaoshi-music-game1/main/drums.mp3",
-                desc: "架子鼓是爵士乐队中重要的打击乐器，由多个鼓和镲片组成。没有固定的音高，主要用于控制节奏和律动，是现代音乐中不可或缺的节奏乐器。"
-            },
-            长笛: {
-                name: "长笛",
-                audioUrl: "https://raw.githubusercontent.com/for-teach52/raolaoshi-music-game1/main/flute.mp3",
-                desc: "长笛是现代管弦乐和室乐中主要的高音旋律乐器，属于木管乐器。音色清新、透彻，音域宽广，既能演奏抒情旋律，也能演奏快速的音阶和装饰音。"
-            },
-            吉他: {
-                name: "吉他",
-                audioUrl: "https://raw.githubusercontent.com/for-teach52/raolaoshi-music-game1/main/guitar.mp3",
-                desc: "吉他又译六弦琴，属于弹拨乐器。通常有六条弦，形状与提琴相似，音色圆润温暖，适合民谣、摇滚、古典等多种音乐风格，是非常流行的民间乐器。"
-            },
-            古筝: {
-                name: "古筝",
-                audioUrl: "https://raw.githubusercontent.com/for-teach52/raolaoshi-music-game1/main/guzheng.mp3",
-                desc: "古筝是中国传统弹拨弦鸣乐器，又名汉筝、秦筝。一般由二十一弦组成，音色清脆悦耳，悠扬动听，是中国民族乐器中极具代表性的乐器之一。"
-            },
-            唢呐: {
-                name: "唢呐",
-                audioUrl: "https://raw.githubusercontent.com/for-teach52/raolaoshi-music-game1/main/suona.mp3",
-                desc: "唢呐是中国民族吹管乐器的一种，音色高亢、嘹亮，穿透力极强，常用于民间婚丧嫁娶、节庆典礼等场合，是极具特色的民间乐器。"
-            },
-            口风琴: {
-                name: "口风琴",
-                audioUrl: "https://raw.githubusercontent.com/for-teach52/raolaoshi-music-game1/main/harmonica.mp3",
-                desc: "口风琴是一种结合了键盘和吹奏的乐器，体积小巧、音色明亮，操作简单，非常适合儿童音乐启蒙，既能独奏也能合奏。"
-            },
-            萨克斯: {
-                name: "萨克斯",
-                audioUrl: "https://raw.githubusercontent.com/for-teach52/raolaoshi-music-game1/main/saxphone.mp3",
-                desc: "萨克斯是一种木管乐器，兼具铜管乐器的嘹亮和木管乐器的柔和，音色丰富多变，广泛应用于爵士、流行、古典等音乐风格。"
-            },
-            葫芦丝: {
-                name: "葫芦丝",
-                audioUrl: "https://raw.githubusercontent.com/for-teach52/raolaoshi-music-game1/main/hulusi.mp3",
-                desc: "葫芦丝又称“葫芦箫”，是中国云南少数民族特色乐器，音色轻柔细腻、圆润质朴，擅长演奏抒情的民间曲调。"
-            }
-        };
+        // 1. 游戏核心数据定义
+       const instrumentLibrary = {
+  钢琴: {
+      name: "钢琴",
+      audioUrl: "https://cdn.jsdelivr.net/gh/for-teach52/raolaoshi-music-game1@main/piano.mp3",
+      desc: "钢琴是西洋古典音乐中的一种键盘乐器，有“乐器之王”的美称。由88个琴键（52个白键，36个黑键）和金属弦音板组成，音域宽广，表现力丰富，既能独奏也能伴奏。"
+  },
+  小提琴: {
+      name: "小提琴",
+      audioUrl: "https://cdn.jsdelivr.net/gh/for-teach52/raolaoshi-music-game1@main/violin.mp3",
+      desc: "小提琴是一种弦乐器，有“乐器皇后”之称。由琴头、琴颈、琴身三部分组成，靠琴弓摩擦琴弦发声，音色优美，表现力强，是管弦乐队中的核心乐器。"
+  },
+  架子鼓: {
+      name: "架子鼓",
+      audioUrl: "https://cdn.jsdelivr.net/gh/for-teach52/raolaoshi-music-game1@main/drums.mp3",
+      desc: "架子鼓是爵士乐队中重要的打击乐器，由多个鼓和镲片组成。没有固定的音高，主要用于控制节奏和律动，是现代音乐中不可或缺的节奏乐器。"
+  },
+  长笛: {
+      name: "长笛",
+      audioUrl: "https://cdn.jsdelivr.net/gh/for-teach52/raolaoshi-music-game1@main/flute.mp3",
+      desc: "长笛是现代管弦乐和室乐中主要的高音旋律乐器，属于木管乐器。音色清新、透彻，音域宽广，既能演奏抒情旋律，也能演奏快速的音阶和装饰音。"
+  },
+  吉他: {
+      name: "吉他",
+      audioUrl: "https://cdn.jsdelivr.net/gh/for-teach52/raolaoshi-music-game1@main/guitar.mp3",
+      desc: "吉他又译六弦琴，属于弹拨乐器。通常有六条弦，形状与提琴相似，音色圆润温暖，适合民谣、摇滚、古典等多种音乐风格，是非常流行的民间乐器。"
+  },
+  古筝: {
+      name: "古筝",
+      audioUrl: "https://cdn.jsdelivr.net/gh/for-teach52/raolaoshi-music-game1@main/guzheng.mp3",
+      desc: "古筝是中国传统弹拨弦鸣乐器，又名汉筝、秦筝。一般由二十一弦组成，音色清脆悦耳，悠扬动听，是中国民族乐器中极具代表性的乐器之一。"
+  },
+  唢呐: {
+      name: "唢呐",
+      audioUrl: "https://cdn.jsdelivr.net/gh/for-teach52/raolaoshi-music-game1@main/suona.mp3",
+      desc: "唢呐是中国民族吹管乐器的一种，音色高亢、嘹亮，穿透力极强，常用于民间婚丧嫁娶、节庆典礼等场合，是极具特色的民间乐器。"
+  },
+  口风琴: {
+      name: "口风琴",
+      audioUrl: "https://cdn.jsdelivr.net/gh/for-teach52/raolaoshi-music-game1@main/harmonica.mp3",
+      desc: "口风琴是一种结合了键盘和吹奏的乐器，体积小巧、音色明亮，操作简单，非常适合儿童音乐启蒙，既能独奏也能合奏。"
+  },
+  萨克斯: {
+      name: "萨克斯",
+      audioUrl: "https://cdn.jsdelivr.net/gh/for-teach52/raolaoshi-music-game1@main/saxphone.mp3",
+      desc: "萨克斯是一种木管乐器，兼具铜管乐器的嘹亮和木管乐器的柔和，音色丰富多变，广泛应用于爵士、流行、古典等音乐风格。"
+  },
+  葫芦丝: {
+      name: "葫芦丝",
+      audioUrl: "https://cdn.jsdelivr.net/gh/for-teach52/raolaoshi-music-game1@main/hulusi.mp3",
+      desc: "葫芦丝又称“葫芦箫”，是中国云南少数民族特色乐器，音色轻柔细腻、圆润质朴，擅长演奏抒情的民间曲调。"
+  }
+};
 
         // 游戏状态变量
-        let currentScore = 0; // 当前得分
-        let currentQuestionNum = 1; // 当前题目数
-        let totalQuestions = 10; // 总题目数
-        let currentInstrument = null; // 当前答题的乐器
-        let isAnswered = false; // 是否已经答题
-        let audioPlayer = new Audio(); // 音频播放器
-        let usedInstruments = []; // 记录已出过题的乐器（避免重复）
-        let audioCache = {}; // 缓存预加载的音频对象（核心新增）
+        let currentScore = 0;
+        let currentQuestionNum = 1;
+        let totalQuestions = 10;
+        let currentInstrument = null;
+        let isAnswered = false;
+        let audioPlayer = new Audio();
+        let usedInstruments = [];
+        // 新增：缓存预加载的音频对象（避免重复创建）
+        let audioCache = {};
 
         // 2. DOM元素获取
         const startBtn = document.getElementById('startBtn');
@@ -415,44 +416,35 @@
         // 3. 工具函数
         // 随机获取一个乐器（确保不重复）
         function getRandomInstrument() {
-            const instrumentNames = Object.keys(instrumentLibrary);
-            // 过滤掉已使用过的乐器，得到可用乐器列表
-            const availableInstruments = instrumentNames.filter(name => !usedInstruments.includes(name));
-            // 从可用乐器中随机选一个
-            const randomIndex = Math.floor(Math.random() * availableInstruments.length);
-            const selectedName = availableInstruments[randomIndex];
-            // 把选中的乐器加入“已使用”列表
-            usedInstruments.push(selectedName);
-            return instrumentLibrary[selectedName];
+    	const instrumentNames = Object.keys(instrumentLibrary);
+    	const availableInstruments = instrumentNames.filter(name => !usedInstruments.includes(name));
+    	const randomIndex = Math.floor(Math.random() * availableInstruments.length);
+    	const selectedName = availableInstruments[randomIndex];
+    	usedInstruments.push(selectedName);
+    	return instrumentLibrary[selectedName];
         }
 
-        // 生成选项（1个正确+3个错误）
+        // 生成选项
         function generateOptions(correctInstrument) {
             const allInstruments = Object.values(instrumentLibrary);
-            // 过滤掉正确答案，随机选3个错误选项
             const wrongOptions = allInstruments
                 .filter(instr => instr.name !== correctInstrument.name)
                 .sort(() => 0.5 - Math.random())
                 .slice(0, 3);
-            // 合并正确和错误选项，再打乱顺序
             const allOptions = [correctInstrument, ...wrongOptions].sort(() => 0.5 - Math.random());
             return allOptions;
         }
 
         // 渲染题目
         function renderQuestion() {
-            // 重置状态
             isAnswered = false;
             feedbackArea.innerHTML = '';
             instrumentTitle.textContent = '乐器小知识';
             instrumentDesc.textContent = '回答问题后将显示该乐器的特点介绍哦～';
             
-            // 获取随机乐器
             currentInstrument = getRandomInstrument();
-            // 生成选项
             const options = generateOptions(currentInstrument);
             
-            // 渲染选项按钮
             optionsArea.innerHTML = '';
             options.forEach(option => {
                 const btn = document.createElement('button');
@@ -463,67 +455,47 @@
                 optionsArea.appendChild(btn);
             });
 
-            // 更新题目数显示
             currentQuestionElement.textContent = currentQuestionNum;
         }
 
-        // 强化版播放音频函数（核心修复）
+        // 修复后的播放音频函数（核心修改）
         function playAudio() {
             if (!currentInstrument) return;
             
-            // 1. 暂停上一段正在播放的音频，重置播放位置
-            if (audioPlayer) {
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0;
-            }
-
-            const audioUrl = currentInstrument.audioUrl;
-            // 添加时间戳绕过浏览器缓存，确保每次拉取最新资源
-            const timestampedUrl = audioUrl + "?t=" + new Date().getTime();
-            
+            // 1. 暂停上一段正在播放的音频
+            audioPlayer.pause();
             // 2. 优先使用缓存的音频对象，避免重复加载
+            const audioUrl = currentInstrument.audioUrl;
             if (audioCache[audioUrl]) {
                 audioPlayer = audioCache[audioUrl];
-                audioPlayer.src = timestampedUrl; // 刷新URL
             } else {
-                audioPlayer = new Audio();
-                audioPlayer.crossOrigin = "anonymous"; // 允许跨域
-                audioPlayer.src = timestampedUrl;
+                audioPlayer = new Audio(audioUrl);
+                audioPlayer.crossOrigin = "anonymous";
                 audioCache[audioUrl] = audioPlayer; // 存入缓存
             }
             
-            // 3. 尝试播放，并处理失败自动重试
-            audioPlayer.load(); // 强制重新加载
-            const playPromise = audioPlayer.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.catch(err => {
-                    console.error(`【${currentInstrument.name}】首次播放失败，自动重试:`, err);
-                    // 失败后创建新音频对象重试
-                    const retryAudio = new Audio(timestampedUrl);
-                    retryAudio.crossOrigin = "anonymous";
-                    retryAudio.play().catch(retryErr => {
-                        alert(`【${currentInstrument.name}】音频播放失败，请：1.检查网络 2.刷新页面重试`);
-                        console.error(`【${currentInstrument.name}】重试后仍失败:`, retryErr);
-                    });
-                });
-            }
+            // 3. 重新加载并播放（解决缓存/跨域导致的播放失败）
+            audioPlayer.currentTime = 0; // 重置播放位置
+            audioPlayer.load(); // 重新加载音频
+            audioPlayer.play().catch(err => {
+                // 优化错误提示：显示具体乐器名称，方便排查
+                alert(`【${currentInstrument.name}】音频播放失败，请检查：1.网络是否正常 2.该乐器音频文件是否存在`);
+                console.error(`音频播放错误（${currentInstrument.name}）:`, err);
+            });
         }
 
         // 处理选项点击
         function handleOptionClick(e) {
-            if (isAnswered) return; // 已答题则不再响应
+            if (isAnswered) return;
             isAnswered = true;
 
             const selectedBtn = e.target;
             const selectedName = selectedBtn.dataset.instrument;
             const isCorrect = selectedName === currentInstrument.name;
 
-            // 禁用所有选项按钮
             const allOptionBtns = document.querySelectorAll('.option-btn');
             allOptionBtns.forEach(btn => {
                 btn.disabled = true;
-                // 标记正确/错误
                 if (btn.dataset.instrument === currentInstrument.name) {
                     btn.classList.add('correct');
                 } else if (btn === selectedBtn && !isCorrect) {
@@ -531,30 +503,24 @@
                 }
             });
 
-            // 显示反馈
             const feedbackText = document.createElement('div');
             feedbackText.className = `feedback-text ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
             feedbackText.textContent = isCorrect ? '✅ 回答正确！' : `❌ 回答错误，正确答案是：${currentInstrument.name}`;
             feedbackArea.appendChild(feedbackText);
 
-            // 显示乐器介绍
             instrumentTitle.textContent = `${currentInstrument.name} 🎵`;
             instrumentDesc.textContent = currentInstrument.desc;
 
-            // 更新得分
             if (isCorrect) {
                 currentScore += 10;
                 scoreElement.textContent = currentScore;
             }
 
-            // 延迟进入下一题/显示结果
             setTimeout(() => {
                 if (currentQuestionNum < totalQuestions) {
-                    // 下一题
                     currentQuestionNum++;
                     renderQuestion();
                 } else {
-                    // 游戏结束，显示结果
                     showResult();
                 }
             }, 2000);
@@ -563,7 +529,6 @@
         // 显示游戏结果
         function showResult() {
             resultArea.classList.remove('hidden');
-            // 根据得分显示不同评语
             if (currentScore === 100) {
                 resultTitle.textContent = '满分！🎖️ 音乐小天才！';
                 resultScore.textContent = `你得了 ${currentScore} 分，太厉害啦！`;
@@ -583,37 +548,31 @@
         function resetGame() {
             currentScore = 0;
             currentQuestionNum = 1;
-            usedInstruments = []; // 重置已使用乐器列表
+            usedInstruments = [];
             scoreElement.textContent = 0;
             resultArea.classList.add('hidden');
             renderQuestion();
         }
 
         // 4. 事件监听
-        // 开始游戏
         startBtn.addEventListener('click', () => {
             startBtn.classList.add('hidden');
             gameMain.classList.remove('hidden');
             resetGame();
         });
 
-        // 播放音频
         audioBtn.addEventListener('click', playAudio);
-
-        // 重新开始游戏
         restartBtn.addEventListener('click', resetGame);
 
-        // 5. 页面加载完成初始化（强化预加载）
+        // 5. 优化预加载逻辑（提前缓存所有音频）
         document.addEventListener('DOMContentLoaded', () => {
-            // 初始化音频播放器
             audioPlayer.volume = 0.7;
-            // 预加载所有乐器音频，存入缓存（核心强化）
+            // 预加载所有音频并存入缓存
             Object.values(instrumentLibrary).forEach(instr => {
-                const timestampedUrl = instr.audioUrl + "?t=" + new Date().getTime();
-                const preloadAudio = new Audio(timestampedUrl);
-                preloadAudio.crossOrigin = "anonymous";
-                preloadAudio.load(); // 强制预加载
-                audioCache[instr.audioUrl] = preloadAudio; // 存入缓存
+                const audio = new Audio(instr.audioUrl);
+                audio.crossOrigin = "anonymous";
+                audio.load();
+                audioCache[instr.audioUrl] = audio;
             });
         });
     </script>
